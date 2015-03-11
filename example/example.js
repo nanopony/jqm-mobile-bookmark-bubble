@@ -18,7 +18,7 @@
 /** @fileoverview Example of how to use the bookmark bubble. */
 
 /** Don't show the bubble if click dismiss button at 3 times. */
-google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS=3;
+google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS = 3;
 
 /** page to bookmark bubble (generally, this should be top page) */
 /** page to bookmark bubble (generally, this should be top page) */
@@ -37,13 +37,14 @@ $(document).bind("mobileinit", function(){
     var parameter = page_popup_bubble;
 
     bubble.hasHashParameter = function() {
-      return location.hash != "" && location.href.indexOf(parameter) == location.href.length - parameter.length;
+      return false;
+      //return location.hash != "" && location.href.indexOf(parameter) == location.href.length - parameter.length;
     };
 
     bubble.setHashParameter = function() {
-      if (!this.hasHashParameter()) {
-        location.href = parameter;
-      }
+      // if (!this.hasHashParameter()) {
+      //   location.href = parameter;
+      // }
     };
 
     bubble.getViewportHeight = function() {
@@ -67,6 +68,46 @@ $(document).bind("mobileinit", function(){
     };
 
     bubble.showIfAllowed();
+    doDiagnostics($('#diag'), bubble);
+
   }, 1000 /** delay to show the bubble */ );
  });
 });
+
+function resetCounter() {
+  var key = google.bookmarkbubble.Bubble.prototype.LOCAL_STORAGE_PREFIX 
+      + google.bookmarkbubble.Bubble.prototype.DISMISSED_;
+  window.localStorage[key] = String(0);
+}
+
+function boolToText (bool) {
+	return bool?"Yes":"No";
+}
+
+/** Diagnostic output */
+function doDiagnostics($elm, bubble) {
+	var out = [];
+
+    
+	out.push("JQuery version: " + jQuery.fn.jquery);
+	out.push("Bubble allowed to show: " + boolToText(bubble.isAllowedToShow_()));
+	if (!bubble.isAllowedToShow_()) {
+		out.push(">> Why? ");
+		out.push(">> Is UserAgent Supported: " + boolToText(bubble.isUserAgentSupported_()));
+		out.push(">> Is IPad: " + boolToText(bubble.isIpad_()));
+		out.push(">> Is Android: " + boolToText(bubble.isAndroid_()));
+		out.push(">> Is Playbook: " + boolToText(bubble.isPlayBook_()));
+		out.push(">> Is Blackberry: " + boolToText(bubble.isBlackBerry_()));
+
+		out.push(">> Has dismissed too many times: " + boolToText(bubble.hasBeenDismissedTooManyTimes_()));
+		out.push(">> Is Fullscreen: " + boolToText(bubble.isFullscreen_()));
+		out.push(">> Has Hash parameter: " + boolToText(bubble.hasHashParameter()));
+	}
+
+	var key = bubble.LOCAL_STORAGE_PREFIX + bubble.DISMISSED_;
+    var value = Number(window.localStorage[key]) || 0;
+
+	out.push("Dismissed, times: " + value);
+	
+	$elm.html(out.join("<br/>"));
+}

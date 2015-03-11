@@ -300,11 +300,11 @@ google.bookmarkbubble.Bubble.prototype.REL_ICON_ =
 
 
 /**
- * Regular expression for detecting an iPhone or iPod or iPad.
+ * Regular expression for detecting an whether the useragent is supported.
  * @type {!RegExp}
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.MOBILE_SAFARI_USERAGENT_REGEX_ =
+google.bookmarkbubble.Bubble.prototype.SUPPORTED_USERAGENT_REGEX_ =
     /iPhone|iPod|iPad|Android|BlackBerry|PlayBook/;
 
 
@@ -345,7 +345,7 @@ google.bookmarkbubble.Bubble.prototype.ANDROID_VERSION_USERAGENT_REGEX_ =
  * @private
  */
 google.bookmarkbubble.Bubble.prototype.isAllowedToShow_ = function() {
-  return this.isMobileSafari_() &&
+  return this.isUserAgentSupported_() &&
       !this.hasBeenDismissedTooManyTimes_() &&
       !this.isFullscreen_() &&
       !this.hasHashParameter();
@@ -459,8 +459,8 @@ google.bookmarkbubble.Bubble.prototype.isFullscreen_ = function() {
  * @return {boolean} True if the current user agent looks like Mobile Safari.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.isMobileSafari_ = function() {
-  return this.MOBILE_SAFARI_USERAGENT_REGEX_.test(window.navigator.userAgent);
+google.bookmarkbubble.Bubble.prototype.isUserAgentSupported_ = function() {
+  return this.SUPPORTED_USERAGENT_REGEX_.test(window.navigator.userAgent);
 };
 
 

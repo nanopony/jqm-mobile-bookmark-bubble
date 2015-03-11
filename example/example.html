@@ -31,7 +31,6 @@
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="../bookmark_bubble.js"></script>
     <!-- Japanese translation -->
-    <script type="text/javascript" src="../bookmark_bubble_msg_ja.js"></script>
     <script type="text/javascript" src="example.js"></script>
     <script>
       page_popup_bubble = "#index";
@@ -44,21 +43,10 @@
       <h1>Bookmark Bubble</h1>
    </div>
    <div data-role="content">
-    <p>The bookmark bubble will show after a second, if:</p>
-    <ul>
-      <li>It has not been previously dismissed too often</li>
-      <li>The application is not running in full screen mode</li>
-      <li>The bookmark bubble hash token is not present</li>
-    </ul>
-    <p>Supported browsers:</p>
-    <ul>
-      <li>iPhone / iPod / iPad Mobile Safari 3.0+</li>
-    </ul>
+    <h3>Diagnostics</h3>
+    <code id="diag"></code>
     <form action="example.html">
-      <button onclick="
-        var key = google.bookmarkbubble.Bubble.prototype.LOCAL_STORAGE_PREFIX 
-                + google.bookmarkbubble.Bubble.prototype.DISMISSED_;
-        window.localStorage[key] = String(0);">Reset Counter
+      <button onclick="resetCounter()">Reset Counter
       </button>
     </form>
    </div>
