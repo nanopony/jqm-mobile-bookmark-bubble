@@ -13,71 +13,60 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-*/
+  */
 
-/** @fileoverview Example of how to use the bookmark bubble. */
+  /** @fileoverview Example of how to use the bookmark bubble. */
 
-/** Don't show the bubble if click dismiss button at 3 times. */
-google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS = 3;
+  /** Don't show the bubble if click dismiss button at 3 times. */
+  google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS = 3;
 
-/** page to bookmark bubble (generally, this should be top page) */
-/** page to bookmark bubble (generally, this should be top page) */
-if(typeof(page_popup_bubble)=="undefined"){
-  page_popup_bubble = "#index";
-}
+  /** page to bookmark bubble (generally, this should be top page) */
+  if(typeof(page_popup_bubble)=="undefined"){
+  	page_popup_bubble = "#index";
+  }
 
+  $(document).ready(function(){
+  	console.log('init');
+  	$(page_popup_bubble).on('pageinit',function() {
+  		var bubble = new google.bookmarkbubble.Bubble();
+  		var parameter = page_popup_bubble;
+  		
+  		bubble.hasHashParameter = function() {
+  			return false;
+  		};
 
-/** bookmark bubble initialized in mobileinit event for jquery mobile. */
-$(document).bind("mobileinit", function(){
+  		bubble.setHashParameter = function() {
+  		};
 
- $(page_popup_bubble).live('pageinit',function() {
-  window.setTimeout(function() {
-    var bubble = new google.bookmarkbubble.Bubble();
+  		bubble.getViewportHeight = function() {
+  			window.console.log('Example of how to override getViewportHeight.');
+  			return window.innerHeight;
+  		};
 
-    var parameter = page_popup_bubble;
+  		bubble.getViewportScrollY = function() {
+  			window.console.log('Example of how to override getViewportScrollY.');
+  			return window.pageYOffset;
+  		};
 
-    bubble.hasHashParameter = function() {
-      return false;
-      //return location.hash != "" && location.href.indexOf(parameter) == location.href.length - parameter.length;
-    };
+  		bubble.registerScrollHandler = function(handler) {
+  			window.console.log('Example of how to override registerScrollHandler.');
+  			window.addEventListener('scroll', handler, false);
+  		};
 
-    bubble.setHashParameter = function() {
-      // if (!this.hasHashParameter()) {
-      //   location.href = parameter;
-      // }
-    };
+  		bubble.deregisterScrollHandler = function(handler) {
+  			window.console.log('Example of how to override deregisterScrollHandler.');
+  			window.removeEventListener('scroll', handler, false);
+  		};
 
-    bubble.getViewportHeight = function() {
-      window.console.log('Example of how to override getViewportHeight.');
-      return window.innerHeight;
-    };
-
-    bubble.getViewportScrollY = function() {
-      window.console.log('Example of how to override getViewportScrollY.');
-      return window.pageYOffset;
-    };
-
-    bubble.registerScrollHandler = function(handler) {
-      window.console.log('Example of how to override registerScrollHandler.');
-      window.addEventListener('scroll', handler, false);
-    };
-
-    bubble.deregisterScrollHandler = function(handler) {
-      window.console.log('Example of how to override deregisterScrollHandler.');
-      window.removeEventListener('scroll', handler, false);
-    };
-
-    bubble.showIfAllowed();
-    doDiagnostics($('#diag'), bubble);
-
-  }, 1000 /** delay to show the bubble */ );
- });
+  		bubble.showIfAllowed();
+  		doDiagnostics($('#diag'), bubble);
+  	});
 });
 
 function resetCounter() {
-  var key = google.bookmarkbubble.Bubble.prototype.LOCAL_STORAGE_PREFIX 
-      + google.bookmarkbubble.Bubble.prototype.DISMISSED_;
-  window.localStorage[key] = String(0);
+	var key = google.bookmarkbubble.Bubble.prototype.LOCAL_STORAGE_PREFIX 
+	+ google.bookmarkbubble.Bubble.prototype.DISMISSED_;
+	window.localStorage[key] = String(0);
 }
 
 function boolToText (bool) {
@@ -88,7 +77,7 @@ function boolToText (bool) {
 function doDiagnostics($elm, bubble) {
 	var out = [];
 
-    
+
 	out.push("JQuery version: " + jQuery.fn.jquery);
 	out.push("Bubble allowed to show: " + boolToText(bubble.isAllowedToShow_()));
 	if (!bubble.isAllowedToShow_()) {
@@ -105,7 +94,7 @@ function doDiagnostics($elm, bubble) {
 	}
 
 	var key = bubble.LOCAL_STORAGE_PREFIX + bubble.DISMISSED_;
-    var value = Number(window.localStorage[key]) || 0;
+	var value = Number(window.localStorage[key]) || 0;
 
 	out.push("Dismissed, times: " + value);
 	
