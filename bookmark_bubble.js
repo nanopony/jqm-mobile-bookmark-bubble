@@ -281,7 +281,7 @@ android44:
 opera:
 '<b>Install this app:</b><br /> Please, open this page in your default browser, Firefox or Chrome add follow the onscreen instructions<br /><br />',
 firefox:
-'<b>Install this app:</b><br />1) Tap <img src="'+ google.bookmarkbubble.Bubble.prototype.IMAGE_ANDROID4_MOBILE_BOOKMARK_DATA_URL_ +'" style="height: 1.5em;display: inline-block;padding:0;margin:0;" />,<br /> 2) Select "<b>Page</i>" menu item 2) Select "<b>Add to homescreen</b>"<br /><br />',
+'<b>Install this app:</b><br />1) Tap <img src="'+ google.bookmarkbubble.Bubble.prototype.IMAGE_ANDROID4_MOBILE_BOOKMARK_DATA_URL_ +'" style="height: 1.5em;display: inline-block;padding:0;margin:0;" />,<br /> 2) Select "<b>Page</b>" menu item <br />3) Select "<b>Add to homescreen</b>"<br /><br />',
 blackberry:
 '<b>Install this app:</b><br /> Tap <img class="bookmark-bubble-menu-icon" src="'+ google.bookmarkbubble.Bubble.prototype.IMAGE_BLACKBERRY_ICON_DATA_URL_ +'" style="height: 1em;display: inline-block;padding:0;margin:0" />, select "<b>Add to Home Screen</b>"',
 playbook:
