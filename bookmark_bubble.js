@@ -1,10 +1,12 @@
 /*
+  BookmarkBubble
+  Version:  1.1.4
+  
+  Based upon 
+  
+  Mobile Bookmark Bubble by Google Inc., original copyrights and license below;
   Modified by Robert Gerald Porter, for Weever Apps Inc.
-
-  Version:  1.1.3
-  Release:  October 21, 2011
-
-  Based upon Mobile Bookmark Bubble by Google Inc., original copyrights and license below.
+  Modified by Nanopony, for Splashfolio Inc.
 
   Changelog:
 
@@ -23,6 +25,7 @@
   1.1.2 : - Android 4.0 Tablet / Mobile both support.
   1.1.3 : - Fork by wiifm
           - iOS7 support.
+  1.1.4 : - Fork by nanopony
 
   ##########################
 
@@ -368,6 +371,8 @@ google.bookmarkbubble.Bubble.prototype.FIREFOX_USERAGENT_REGEX_ = /Firefox/;
  	document.body.appendChild(this.element_);
  	this.element_.style.WebkitTransform =
  	'translate3d(0,' + this.getHiddenYPosition_() + 'px,0)';
+	this.element_.style.transform =
+ 	'translate3d(0,' + this.getHiddenYPosition_() + 'px,0)';
 
  	this.setHashParameter();
 
@@ -557,6 +562,10 @@ try {
  	this.element_.style.WebkitTransition = '-webkit-transform 0.7s ease-out';
  	this.element_.style.WebkitTransform =
  	'translate3d(0,' + this.getVisibleYPosition_() + 'px,0)';
+
+ 	this.element_.style.transition = 'transform 0.7s ease-out';
+ 	this.element_.style.transform =
+ 	'translate3d(0,' + this.getVisibleYPosition_() + 'px,0)';
  };
 
 
@@ -581,6 +590,11 @@ try {
  	}
  	this.element_.style.WebkitTransition = '-webkit-transform 0.7s ease-in';
  	this.element_.style.WebkitTransform =
+ 	'translate3d(0,' + this.getHiddenYPosition_() + 'px,0)';
+ 	window.setTimeout(google.bind(this.destroy, this), 700);
+
+ 	this.element_.style.transition = 'transform 0.7s ease-in';
+ 	this.element_.style.transform =
  	'translate3d(0,' + this.getHiddenYPosition_() + 'px,0)';
  	window.setTimeout(google.bind(this.destroy, this), 700);
  };
@@ -676,7 +690,7 @@ try {
 			verticalLocation: this.consts.verticalLocation.VERTICAL_BOTTOM,
 			bubbleBackground: this.consts.bubbleBackground.BLUE_GRADIENT_INVERSE
 		};
-		
+
 		var isIpad = this.isIpad_();
 		var isAndroid = this.isAndroid_();
 		var isPlayBook = this.isPlayBook_();
@@ -797,14 +811,23 @@ try {
  	bubbleInner.style.WebkitBorderRadius = '8px';
  	bubbleInner.style.WebkitBoxShadow = '0 0 8px rgba(0, 0, 0, 0.7)';
  	bubbleInner.style.WebkitBackgroundSize = '100% 8px';
+	
+	bubbleInner.style.borderRadius = '8px';
+ 	bubbleInner.style.boxShadow = '0 0 8px rgba(0, 0, 0, 0.7)';
+ 	bubbleInner.style.backgroundSize = '100% 8px';
+	
+	bubbleInner.style.borderRadius = '8px';
+ 	bubbleInner.style.boxShadow = '0 0 8px rgba(0, 0, 0, 0.7)';
+ 	bubbleInner.style.backgroundSize = '100% 8px';
+ 	
  	bubbleInner.style.backgroundColor = '#eee';
 
  	switch (config.bubbleBackground) {
  		case this.consts.bubbleBackground.BLUE_GRADIENT_DIRECT: // isIpad || isPlayBook || this.getAndroidVersion_() >= this.getVersion_(3, 0)
- 		bubbleInner.style.background = '#cddcf3 -webkit-gradient(linear, left bottom, left top, from(#cddcf3), to(#b3caed)) no-repeat top';
+ 		bubbleInner.style.background = '#cddcf3 gradient(linear, left bottom, left top, from(#cddcf3), to(#b3caed)) no-repeat top';
  		break;
  		case this.consts.bubbleBackground.BLUE_GRADIENT_INVERSE: // other
- 		bubbleInner.style.background = '#cddcf3 -webkit-gradient(linear, left bottom, left top, from(#b3caed), to(#cddcf3)) no-repeat bottom';
+ 		bubbleInner.style.background = '#cddcf3 gradient(linear, left bottom, left top, from(#b3caed), to(#cddcf3)) no-repeat bottom';
  		break;
  	}
 
@@ -825,6 +848,11 @@ try {
 	icon.style.WebkitBackgroundSize = 'contain';
 	icon.style.WebkitBorderRadius = '10px';
 	icon.style.WebkitBoxShadow = '0 2px 5px rgba(0, 0, 0, 0.4)';
+	
+	icon.style.backgroundSize = 'contain';
+	icon.style.borderRadius = '10px';
+	icon.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.4)';
+	
 	bubbleInner.insertBefore(icon, bubbleInner.firstChild);
 
 	var arrow = document.createElement('div');
@@ -836,6 +864,7 @@ try {
 	arrow.style.left = '111px';
 	if (config.verticalLocation === this.consts.verticalLocation.VERTICAL_TOP) {
 		arrow.style.WebkitTransform = 'scale(1, -1)';
+		arrow.style.transform = 'scale(1, -1)';
 		//arrow.style.WebkitTransform = 'rotate(180deg)';
 	}
 	switch (config.horizontalLocation) {
@@ -849,6 +878,7 @@ try {
 		break;
  		case this.consts.horizontalLocation.HORIZONTAL_LEFT: // isIpad || isPlayBook
  		arrow.style.WebkitTransform = 'rotate(180deg)';
+ 		arrow.style.transform = 'rotate(180deg)';
  		arrow.style.top = '-19px';
  		arrow.style.left = '111px';
  		break;
@@ -869,6 +899,8 @@ try {
  	close.style.background =
  	'url(' + this.IMAGE_CLOSE_DATA_URL_ + ') no-repeat';
  	close.style.WebkitBackgroundSize = "contain";
+ 	close.style.backgroundSize = "100% auto";
+ 	close.style.cursor = "pointer";
  	bubbleInner.appendChild(close);
 
  	this.bubbleConfig = config;

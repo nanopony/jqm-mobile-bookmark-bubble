@@ -19,7 +19,7 @@
 
   /** Don't show the bubble if click dismiss button at 3 times. */
   google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS = 3;
-
+  google.bookmarkbubble.Bubble.prototype.TIME_UNTIL_AUTO_DESTRUCT = 9990000;
   /** page to bookmark bubble (generally, this should be top page) */
   if(typeof(page_popup_bubble)=="undefined"){
   	page_popup_bubble = "#index";
